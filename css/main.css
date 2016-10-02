@@ -116,6 +116,9 @@ body {
 }
 
 @media (max-width: 406px), (max-height: 480px) {
+		body{
+			padding-top: 10px;
+		}
     .simon-header {
         font-size: 30px;
     }
@@ -123,4 +126,14 @@ body {
         width: 280px;
         height: 280px;
     }
+}
+
+@media (max-height: 300px) {
+	body{
+		padding-top: 0px;
+	}
+	.main-circle {
+			width: 250px;
+			height: 250px;
+	}
 }
