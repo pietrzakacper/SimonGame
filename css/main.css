@@ -8,8 +8,8 @@ body{
 	padding: 0px;
 	margin: 0px;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	padding-top: 10vh;
 }
 
 .main-circle{
@@ -18,7 +18,7 @@ body{
 	border-radius: 50%;
 	width: 500px;
 	height: 500px;
-	transition: transform 1000ms ease;
+	transition: transform 1000ms ease, width 200ms ease-in-out, height 200ms ease-in-out;
 }
 
 .main-circle:hover{
