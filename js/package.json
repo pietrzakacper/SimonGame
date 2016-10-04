@@ -1,0 +1,28 @@
+{
+  "name": "simon-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/gulp pre-test && node_modules/.bin/tape tests/es5/*.test.js | node_modules/.bin/tap-spec",
+    "monitor": "node_modules/.bin/nodemon -x 'node_modules/.bin/gulp pre-test && node_modules/.bin/tape tests/es5/*.test.js | node_modules/.bin/tap-spec' --watch es6 --watch tests/es6",
+    "dist": "node_modules/.bin/gulp to-browser"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.16.0",
+    "babelify": "^7.3.0",
+    "eslint": "^3.7.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "nodemon": "^1.10.2",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
