@@ -22,7 +22,7 @@ body {
     transition: transform 1500ms cubic-bezier(.23, 1, .32, 1);
 }
 
-.main-circle:hover {
+.main-circle.animate {
     transform: rotate(360deg);
 }
 
