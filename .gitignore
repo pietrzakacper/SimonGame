@@ -1,3 +1,4 @@
 js/node_modules
 js/es5
 js/tests/es5
+*.log
