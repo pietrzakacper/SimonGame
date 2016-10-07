@@ -4,7 +4,7 @@ import GameTools from '../../es5/game-tools';
 test('The getRandomArrayInRangeOfSize method', t => {
 
 	{ //check type of array
-		const isArray = Array.isArray(GameTools.getRandomArrayInRangeOfSize(0, 3,20));
+		const isArray = Array.isArray(GameTools.getRandomArrayInRangeOfSize(0, 3, 20));
 		t.ok(isArray, 'should return Array for correct data');
 	}
 
@@ -26,7 +26,7 @@ test('The getRandomArrayInRangeOfSize method', t => {
 
 		let expected;
 
-		t.ok(1,'should return proper output: ');
+		t.skip('should return proper output: ');
 		for (let i = 0; i < actual.length; ++i) {
 			expected = (actual[i] === 1 ||
 				actual[i] === 2 ||
@@ -35,6 +35,17 @@ test('The getRandomArrayInRangeOfSize method', t => {
 
 			t.ok(expected, `Element number ${i} of array: ${actual[i]} should be equal to 1,2,3 or 4`);
 		}
+	}
+
+	{ //check if method is throwing error for incorrect input
+		const arg1 = new Array();
+		const arg2 = 'dog';
+		const length = 20;
+
+		t.throws(() => {
+			GameTools.getRandomArrayInRangeOfSize(arg1, arg2, length);
+		}, 'should throw an error for incorrect input');
+
 	}
 
 	t.end();
