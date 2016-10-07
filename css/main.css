@@ -13,6 +13,14 @@ body {
     padding-top: 10vh;
 }
 
+.disable-select{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: inherit;
+}
+
 .main-circle {
     position: relative;
     border: 2px white solid;
@@ -38,7 +46,7 @@ body {
     display: inline-block;
 }
 
-.touchable > .btn-row >.btn:hover {
+.touchable> .btn-row>.btn:hover {
     opacity: 0.8;
 }
 
@@ -91,18 +99,94 @@ body {
     transform: translate(-50%, -50%);
     border: 3px solid #fff;
     border-radius: 50%;
-    text-align: center;
     background: #2c3e50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #ecf0f1;
+		cursor: default;
 }
 
 .simon-header {
-    color: #ecf0f1;
+    position: absolute;
     font-family: fantasy;
     font-size: 50px;
     font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.count {
+    position: absolute;
+    font-family: fantasy;
+    font-size: 30px;
+    left: 35%;
+    top: 25%;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 25%;
+    background: #201f1f;
+}
+
+.panel-btn {
+    position: absolute;
+    font-family: fantasy;
+    transform: translate(-50%, -50%);
+    border: 2px solid white;
+    border-radius: 25%;
+    background: #201f1f;
+    transition: background 180ms;
+}
+
+.panel-btn.active:hover {
+    cursor: pointer;
+    background: #4e4d4d;
+}
+
+.start {
+    left: 32%;
+    font-size: 25px;
+    padding: 5px;
+    bottom: 10%;
+}
+
+.reset {
+    left: 68%;
+    font-size: 25px;
+    padding: 5px;
+    bottom: 10%;
+}
+
+.strict {
+    font-size: 20px;
+    left: 65%;
+    top: 33%;
+    padding: 3px;
+}
+
+.strict> .diode {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%);
+    border: 2px solid #191919;
+    border-radius: 50%;
+    background: #7f8c8d;
+		transition: background 300ms ease-in-out;
+}
+
+.diode.active {
+    background: #2fd62c;
+}
+
+.dbg {
+    background-color: red;
+    border: 2px solid blue;
+}
+
+.dbg:hover {
+    background: yellow;
 }
 
 @media (max-width: 512px), (max-height: 590px) {
@@ -113,14 +197,34 @@ body {
         width: 400px;
         height: 400px;
     }
+    .panel-btn {
+        font-size: 20px;
+    }
+    .start {
+        left: 28%;
+    }
+    .reset {
+        left: 68%;
+    }
+		.count{
+			left: 32%;
+		}
 }
 
 @media (max-width: 406px), (max-height: 480px) {
-		body{
-			padding-top: 10px;
-		}
+    body {
+        padding-top: 10px;
+    }
     .simon-header {
         font-size: 30px;
+    }
+    .count {
+        font-size: 20px;
+    }
+    .panel-btn {
+        font-size: 15px;
+        border-width: 1px;
+        padding: 2px;
     }
     .main-circle {
         width: 280px;
@@ -129,11 +233,11 @@ body {
 }
 
 @media (max-height: 300px) {
-	body{
-		padding-top: 0px;
-	}
-	.main-circle {
-			width: 250px;
-			height: 250px;
-	}
+    body {
+        padding-top: 0px;
+    }
+    .main-circle {
+        width: 250px;
+        height: 250px;
+    }
 }
