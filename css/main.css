@@ -56,7 +56,7 @@ body {
 }
 
 .btn1.active {
-    background-color: #3cde81;
+    background-color: #46fe94;
 }
 
 .btn2 {
@@ -65,7 +65,7 @@ body {
 }
 
 .btn2.active {
-    background-color: #e74c3c;
+    background-color: #ff5b4a;
 }
 
 .btn3 {
@@ -74,7 +74,7 @@ body {
 }
 
 .btn3.active {
-    background-color: #e67e22;
+    background-color: #f98c2d;
 }
 
 .btn4 {
@@ -83,7 +83,7 @@ body {
 }
 
 .btn4.active {
-    background-color: #57b8f9;
+    background-color: #6ec0f7;
 }
 
 .active:hover {
