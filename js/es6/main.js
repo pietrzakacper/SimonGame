@@ -10,7 +10,7 @@ if(DEBUG){
 	console.log('Starting application...');
 	console.log(Game);
 }
-Game.init(mainCircle);
+Game.init(mainCircle, startButton, resetButton);
 
 if(DEBUG){
 	console.log('pre events binding');
