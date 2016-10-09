@@ -44,15 +44,31 @@ body {
     background-color: red;
     height: 100%;
     display: inline-block;
+		transition: box-shadow 150ms;
 }
 
 .touchable> .btn-row>.btn:hover {
-    opacity: 0.8;
+	cursor: pointer;
+}
+.touchable> .btn-row>.btn1:hover {
+	box-shadow: -10px -10px 5px rgb(172, 255, 215);
+}
+
+.touchable> .btn-row>.btn2:hover {
+	box-shadow: 10px -10px 5px rgb(252, 170, 191);
+}
+
+.touchable> .btn-row>.btn3:hover {
+	box-shadow: -10px 10px 5px rgb(255, 195, 152);
+}
+
+.touchable> .btn-row>.btn4:hover {
+	box-shadow: 10px 10px 5px rgb(182, 216, 255);
 }
 
 .btn1 {
     border-top-left-radius: 100%;
-    background-color: #2ecc71;
+    background-color: #27a65d;
 }
 
 .btn1.active {
@@ -61,7 +77,7 @@ body {
 
 .btn2 {
     border-top-right-radius: 100%;
-    background-color: #c0392b;
+    background-color: #9f2f24;
 }
 
 .btn2.active {
@@ -70,7 +86,7 @@ body {
 
 .btn3 {
     border-bottom-left-radius: 100%;
-    background-color: #d35400;
+    background-color: #b44b05;
 }
 
 .btn3.active {
@@ -79,7 +95,7 @@ body {
 
 .btn4 {
     border-bottom-right-radius: 100%;
-    background-color: #2980b9;
+    background-color: #286d9a;
 }
 
 .btn4.active {
@@ -135,6 +151,12 @@ body {
     border-radius: 25%;
     background: #201f1f;
     transition: background 180ms;
+}
+
+.panel-btn.disabled{
+	background-color: #111111;
+	color: rgb(83, 83, 83);
+	border-color: rgb(83,83,83)
 }
 
 .panel-btn.active:hover {
