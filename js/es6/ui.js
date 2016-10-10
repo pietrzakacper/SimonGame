@@ -1,8 +1,10 @@
 let cachedDOM = {};
 let highlightDuration = 0;
+let highlightedButton = null;
 const flags = {
 	isStartActive: true,
-	isMainCircleTouchable: false
+	isMainCircleTouchable: false,
+	isStrictModeActive: false
 };
 
 
@@ -32,15 +34,16 @@ function renderCount(count) {
 }
 
 function highlightButton(index) {
-	toggleActive(cachedDOM.simonButtons[index - 1]);
+	makeButtonHighlighted(index);
 
 	window.setTimeout(() => {
-		toggleActive(cachedDOM.simonButtons[index - 1]);
+		makeButtonNotHighlighted(index);
 	}, highlightDuration);
 }
 
 function activateStartButton() {
 	cachedDOM.startButton.classList.add('active');
+	cachedDOM.startButton.classList.remove('disabled');
 	flags.isStartActive = true;
 }
 
@@ -61,17 +64,35 @@ function disableCircle() {
 }
 
 function makeButtonHighlighted(index) {
+	highlightedButton = index;
 	activate(cachedDOM.simonButtons[index - 1]);
 }
 
 function makeButtonNotHighlighted(index) {
+	highlightedButton = null;
 	deactivate(cachedDOM.simonButtons[index - 1]);
+}
+
+function reset(){
+	deactivate(cachedDOM.diode);
+	flags.isStrictModeActive = false;
+
+	activateStartButton();
+
+	if(highlightedButton !== null){
+		makeButtonNotHighlighted(highlightedButton);
+	}
+
+	disableCircle();
+
+	renderCount(0);
 }
 
 export default {
 	init,
 	animateMainCircle,
 	toggleStrictMode: () => {
+		flags.isStrictModeActive = !flags.isStrictModeActive;
 		toggleActive(cachedDOM.diode);
 	},
 	highlightButton,
@@ -82,5 +103,6 @@ export default {
 	disableCircle,
 	flags,
 	makeButtonHighlighted,
-	makeButtonNotHighlighted
+	makeButtonNotHighlighted,
+	reset
 };

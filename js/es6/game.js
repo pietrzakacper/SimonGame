@@ -27,17 +27,15 @@ function start() {
 	}
 
 	UI.deactivateStartButton();
-
+	gameInfo.maxStreak = 20;
+	gameInfo.simonSequence = GameTools.getSimonSequence(gameInfo.maxStreak);
 	if (DEBUG) {
-		console.log('Started...');
+		console.log('Simon Sequence is: ');
+		console.log(gameInfo.simonSequence);
 	}
-	gameInfo.simonSequence = GameTools.getSimonSequence();
 	gameInfo.currentStreak = 0;
-	gameInfo.playersInput = [];
 	//TODO set timeout
-	if (DEBUG) {
-		console.log('Initially changing to simon state...');
-	}
+
 	switchToSimonState();
 }
 
@@ -45,10 +43,9 @@ function reset() {
 	if (DEBUG) {
 		console.log('Reseted...');
 	}
-	UI.activateStartButton();
-	//TODO implement reset properly
-
-	UI.renderCount(0);
+	gameInfo.simonSequence = [];
+	gameInfo.currentStreak = 0;
+	UI.reset();
 }
 
 function toggleStrictMode() {
@@ -57,12 +54,12 @@ function toggleStrictMode() {
 }
 
 function playSequence() {
-	UI.renderCount(gameInfo.currentStreak + 1);
-	playStep(0);
+	UI.renderCount(++gameInfo.currentStreak);
+	playStep(1);
 }
 
 function playStep(index) {
-	UI.highlightButton(gameInfo.simonSequence[index]);
+	UI.highlightButton(gameInfo.simonSequence[index-1]);
 
 	if (gameInfo.currentStreak > index) {
 		window.setTimeout(() => {
@@ -87,7 +84,6 @@ function switchToSimonState() {
 }
 
 function onSequenceEnd() {
-	gameInfo.currentStreak++;
 	switchToInputState();
 	gameInfo.playersCount = 0;
 }
@@ -109,13 +105,30 @@ function onSimonButtonPress(event) {
 		}
 		makeButtonHighlighted(gameInfo.playersInput);
 	} else {
-		//handle failure
+		onPlayersFailure();
+		return;
+	}
+
+	gameInfo.playersCount++;
+}
+
+function onPlayersFailure(){
+	if(DEBUG){
+		console.log('player failed...');
+	}
+	if(UI.flags.isStrictModeActive){
+		// reset();
+		// start();
+	} else{
+		gameInfo.playersCount = 0;
+		gameInfo.currentStreak--;
+		switchToSimonState();
 	}
 }
 
 function onSimonButtonRelease() {
 
-	if (!UI.flags.isMainCircleTouchable) {
+	if (!UI.flags.isMainCircleTouchable || gameInfo.isPlayersFailure) {
 		return;
 	}
 
@@ -124,8 +137,6 @@ function onSimonButtonRelease() {
 	}
 
 	makeButtonNotHighlighted(gameInfo.playersInput);
-
-	gameInfo.playersCount++;
 
 	if (gameInfo.playersCount === gameInfo.currentStreak) {
 		onPlayersSequenceEnd();
@@ -146,8 +157,24 @@ function onPlayersSequenceEnd() {
 	if (DEBUG) {
 		console.log('End of player\'s sequence');
 	}
+	//case win
+	if(hasPlayerWon(gameInfo.playersCount)){
+		handleVictory();
+		return;
+	}
 
 	switchToSimonState();
+}
+
+function hasPlayerWon(playersCount){
+	return playersCount === gameInfo.maxStreak;
+}
+
+function handleVictory(){
+	UI.disableCircle();
+	if(DEBUG){
+		console.log('player has won');
+	}
 }
 
 

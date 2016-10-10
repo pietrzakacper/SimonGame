@@ -17,7 +17,7 @@ function getRandomArrayInRangeOfSize(a, b, length) {
 }
 
 export default {
-	getSimonSequence: ()=>{
-		return getRandomArrayInRangeOfSize(1,4,20);
+	getSimonSequence: (size)=>{
+		return getRandomArrayInRangeOfSize(1,4,size);
 	}
 };
