@@ -6,11 +6,19 @@ const flags = {
 	isMainCircleTouchable: false,
 	isStrictModeActive: false
 };
+const buttonsAudio = [];
 
 
 function init(_cachedDOM, _highlightDuration = 400) {
 	cachedDOM = _cachedDOM;
 	highlightDuration = _highlightDuration;
+	for(let i=0;i<4;++i){
+		const audio = new Audio(`sounds/simonSound${i+1}.mp3`);
+		if(DEBUG){
+			console.log('creating audio: ' + `sounds/simonSound${i+1}.mp3`);
+		}
+		buttonsAudio.push(audio);
+	}
 }
 
 function animateMainCircle() {
@@ -35,7 +43,6 @@ function renderCount(count) {
 
 function highlightButton(index) {
 	makeButtonHighlighted(index);
-
 	window.setTimeout(() => {
 		makeButtonNotHighlighted(index);
 	}, highlightDuration);
@@ -66,11 +73,14 @@ function disableCircle() {
 function makeButtonHighlighted(index) {
 	highlightedButton = index;
 	activate(cachedDOM.simonButtons[index - 1]);
+	buttonsAudio[index-1].play();
 }
 
 function makeButtonNotHighlighted(index) {
 	highlightedButton = null;
 	deactivate(cachedDOM.simonButtons[index - 1]);
+	buttonsAudio[index-1].pause();
+	buttonsAudio[index-1].currentTime = 0;
 }
 
 function reset(){

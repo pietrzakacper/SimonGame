@@ -34,8 +34,6 @@ function start() {
 		console.log(gameInfo.simonSequence);
 	}
 	gameInfo.currentStreak = 0;
-	//TODO set timeout
-
 	switchToSimonState();
 }
 
