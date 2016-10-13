@@ -1,5 +1,6 @@
 let cachedDOM = {};
 let highlightDuration = 0;
+let playingButtonSound = null;
 let highlightedButton = null;
 const flags = {
 	isStartActive: true,
@@ -12,9 +13,9 @@ const buttonsAudio = [];
 function init(_cachedDOM, _highlightDuration = 400) {
 	cachedDOM = _cachedDOM;
 	highlightDuration = _highlightDuration;
-	for(let i=0;i<4;++i){
+	for (let i = 0; i < 4; ++i) {
 		const audio = new Audio(`sounds/simonSound${i+1}.mp3`);
-		if(DEBUG){
+		if (DEBUG) {
 			console.log('creating audio: ' + `sounds/simonSound${i+1}.mp3`);
 		}
 		buttonsAudio.push(audio);
@@ -29,11 +30,11 @@ function toggleActive(target) {
 	target.classList.toggle('active');
 }
 
-function activate(target){
+function activate(target) {
 	target.classList.add('active');
 }
 
-function deactivate(target){
+function deactivate(target) {
 	target.classList.remove('active');
 }
 
@@ -73,29 +74,59 @@ function disableCircle() {
 function makeButtonHighlighted(index) {
 	highlightedButton = index;
 	activate(cachedDOM.simonButtons[index - 1]);
-	buttonsAudio[index-1].play();
+	playSound(index);
+
 }
 
 function makeButtonNotHighlighted(index) {
 	highlightedButton = null;
 	deactivate(cachedDOM.simonButtons[index - 1]);
-	buttonsAudio[index-1].pause();
-	buttonsAudio[index-1].currentTime = 0;
+	stopSound(index);
 }
 
-function reset(){
+function reset() {
 	deactivate(cachedDOM.diode);
 	flags.isStrictModeActive = false;
 
 	activateStartButton();
 
-	if(highlightedButton !== null){
+	if (highlightedButton !== null) {
 		makeButtonNotHighlighted(highlightedButton);
 	}
-
 	disableCircle();
 
 	renderCount(0);
+}
+
+function playSound(index) {
+	if (playingButtonSound != null) {
+		stopSound(playingButtonSound, true);
+	}
+	playingButtonSound = index;
+	buttonsAudio[index - 1].play();
+}
+
+function stopSound(index, force = false) {
+	if (!force && buttonsAudio[index - 1].currentTime < highlightDuration) {
+		if (DEBUG) {
+			console.log('setting time out...');
+		}
+		window.setTimeout(() => {
+			if (DEBUG) {
+				console.log(' timed out!!!...');
+			}
+			buttonsAudio[index - 1].pause();
+			buttonsAudio[index - 1].currentTime = 0;
+			playingButtonSound = null;
+		}, (highlightDuration - buttonsAudio[index - 1].currentTime) * 1000);
+	} else {
+		if (DEBUG) {
+			console.log('else, stopping...');
+		}
+		buttonsAudio[index - 1].pause();
+		buttonsAudio[index - 1].currentTime = 0;
+		playingButtonSound = null;
+	}
 }
 
 export default {
