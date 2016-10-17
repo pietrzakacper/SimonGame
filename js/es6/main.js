@@ -7,10 +7,6 @@ const resetButton = mainCircle.querySelector('.reset');
 const strictButton = mainCircle.querySelector('.strict');
 const simonButtons = mainCircle.querySelectorAll('.btn-row > .btn');
 
-
-if(DEBUG){
-	console.log('Starting application...');
-}
 Game.init(mainCircle, simonButtons, startButton, resetButton);
 
 startButton.addEventListener('click', Game.start);

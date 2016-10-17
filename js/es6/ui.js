@@ -2,6 +2,8 @@ let cachedDOM = {};
 let highlightDuration = 0;
 let playingButtonSound = null;
 let highlightedButton = null;
+let errorAudio = null;
+let winAudio = null;
 const flags = {
 	isStartActive: true,
 	isMainCircleTouchable: false,
@@ -15,11 +17,10 @@ function init(_cachedDOM, _highlightDuration = 400) {
 	highlightDuration = _highlightDuration;
 	for (let i = 0; i < 4; ++i) {
 		const audio = new Audio(`sounds/simonSound${i+1}.mp3`);
-		if (DEBUG) {
-			console.log('creating audio: ' + `sounds/simonSound${i+1}.mp3`);
-		}
 		buttonsAudio.push(audio);
 	}
+	errorAudio = new Audio('sounds/error.mp3');
+	winAudio = new Audio('sounds/win.mp3');
 }
 
 function animateMainCircle() {
@@ -88,13 +89,17 @@ function reset() {
 	deactivate(cachedDOM.diode);
 	flags.isStrictModeActive = false;
 
-	activateStartButton();
+	errorAudio.pause();
+	errorAudio.currentTime = 0;
+
+	winAudio.pause();
+	winAudio.currentTime = 0;
 
 	if (highlightedButton !== null) {
 		makeButtonNotHighlighted(highlightedButton);
 	}
 	disableCircle();
-
+	activateStartButton();
 	renderCount(0);
 }
 
@@ -108,25 +113,29 @@ function playSound(index) {
 
 function stopSound(index, force = false) {
 	if (!force && buttonsAudio[index - 1].currentTime < highlightDuration) {
-		if (DEBUG) {
-			console.log('setting time out...');
-		}
 		window.setTimeout(() => {
-			if (DEBUG) {
-				console.log(' timed out!!!...');
-			}
 			buttonsAudio[index - 1].pause();
 			buttonsAudio[index - 1].currentTime = 0;
 			playingButtonSound = null;
 		}, (highlightDuration - buttonsAudio[index - 1].currentTime) * 1000);
 	} else {
-		if (DEBUG) {
-			console.log('else, stopping...');
-		}
 		buttonsAudio[index - 1].pause();
 		buttonsAudio[index - 1].currentTime = 0;
 		playingButtonSound = null;
 	}
+}
+
+function playWrongSequenceSound() {
+	errorAudio.play();
+	window.setTimeout(() => {
+		errorAudio.pause();
+		errorAudio.currentTime = 0;
+	}, highlightDuration);
+}
+
+function playVictorySound() {
+	winAudio.play();
+
 }
 
 export default {
@@ -145,5 +154,7 @@ export default {
 	flags,
 	makeButtonHighlighted,
 	makeButtonNotHighlighted,
-	reset
+	reset,
+	playError: playWrongSequenceSound,
+	playVictory: playVictorySound
 };

@@ -21,7 +21,7 @@ gulp.task('to-browser', () => {
 		.pipe(uglify({
 			compress: {
 				global_defs: {
-					DEBUG: true
+					DEBUG: false
 				}
 			}
 		}))
